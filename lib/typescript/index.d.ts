@@ -3,7 +3,7 @@ type MonterosaSdkProps = {
     style: ViewStyle;
     configuration: {
         host: string;
-        experienceUrl: string;
+        experienceUrl?: string;
         projectId: string;
         eventId?: string;
         token?: string;
