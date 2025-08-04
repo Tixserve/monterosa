@@ -11,17 +11,17 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "13.0" }
   s.source       = { :git => "https://gitlab.com/monterosa-sdk/react-native.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
   # iOS SDK dependencies
-  s.dependency 'MonterosaSDKCommon', "0.16.11"
-  s.dependency 'MonterosaSDKConnectKit', "0.16.11"
-  s.dependency 'MonterosaSDKCore', "0.16.11"
-  s.dependency 'MonterosaSDKLauncherKit', "0.16.11"
-  s.dependency 'MonterosaSDKIdentifyKit', "0.16.11"
+  s.dependency 'MonterosaSDKCommon', "0.16.13"
+  s.dependency 'MonterosaSDKConnectKit', "0.16.13"
+  s.dependency 'MonterosaSDKCore', "0.16.13"
+  s.dependency 'MonterosaSDKLauncherKit', "0.16.13"
+  s.dependency 'MonterosaSDKIdentifyKit', "0.16.13"
 
   # Use install_modules_dependencies helper to install the dependencies if React Native version >=0.71.0.
   # See https://github.com/facebook/react-native/blob/febf6b7f33fdb4904669f99d795eba4c0f95d7bf/scripts/cocoapods/new_architecture.rb#L79.

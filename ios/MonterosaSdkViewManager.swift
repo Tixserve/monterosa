@@ -129,6 +129,11 @@ class MonterosaSdkExperienceView : UIView {
         experience.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
         experience.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
     }
+
+    func setCredentialsToken(_ token: String) {
+        Identify.default.setCredentials(credentials: UserCredentials(token: token))
+        debug("Setting credentials with token \(token)")
+    }
     
     func updateToken(_ token: String?, core: Core) {
         guard let token = token else {

@@ -1,6 +1,6 @@
 {
   "name": "@monterosa-sdk/react-native",
-  "version": "0.2.2",
+  "version": "0.2.5",
   "description": "Monterosa / Interaction SDK allows you to embed an Experience in your React Native app.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -39,7 +39,7 @@
     "prereleaseMajor": "release-it --increment premajor --preRelease rc --ci",
     "example": "yarn --cwd example",
     "build:android": "cd example/android && ./gradlew assembleDebug --no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a",
-    "build:ios": "cd example/ios && xcodebuild -workspace MonterosaSdkExample.xcworkspace -scheme MonterosaSdkExample -configuration Debug -sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO",
+    "build:ios": "cd example/ios && xcodebuild -workspace MonterosaSdkExample.xcworkspace -scheme MonterosaSdkExample -configuration Debug -sdk iphonesimulator -arch arm64 CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO",
     "bootstrap": "yarn example && yarn install && yarn example pods",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build"
   },
@@ -75,7 +75,8 @@
     "pod-install": "^0.1.0",
     "prettier": "^2.0.5",
     "react": "18.2.0",
-    "react-native": "0.72.4",
+    "react-native": "0.72.9",
+    "@react-native/gradle-plugin": "0.72.5",
     "react-native-builder-bob": "^0.20.0",
     "release-it": "^15.0.0",
     "turbo": "^1.10.7",

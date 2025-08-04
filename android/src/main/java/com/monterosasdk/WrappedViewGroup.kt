@@ -3,9 +3,9 @@ package com.monterosasdk
 import android.content.Context
 import android.view.Choreographer
 import android.view.View
-import android.view.ViewGroup
+import com.facebook.react.views.view.ReactViewGroup
 
-open class WrappedViewGroup<T: View>(context: Context) : ViewGroup(context) {
+open class WrappedViewGroup<T: View>(context: Context) : ReactViewGroup(context) {
 
   private var wrappedView: T? = null
 
@@ -35,13 +35,15 @@ open class WrappedViewGroup<T: View>(context: Context) : ViewGroup(context) {
    */
   private fun forceLayoutInReactNative(newView: T) {
     Choreographer.getInstance().postFrameCallback {
-      newView.measure(
-        MeasureSpec.makeMeasureSpec(measuredWidth, MeasureSpec.EXACTLY),
-        MeasureSpec.makeMeasureSpec(measuredHeight, MeasureSpec.EXACTLY)
-      )
-      newView.layout(0, 0, newView.measuredWidth, newView.measuredHeight)
-      viewTreeObserver.dispatchOnGlobalLayout()
-      }
+        if (measuredWidth > 0 && measuredHeight > 0) {
+          newView.measure(
+            MeasureSpec.makeMeasureSpec(measuredWidth, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(measuredHeight, MeasureSpec.EXACTLY)
+          )
+          newView.layout(0, 0, newView.measuredWidth, newView.measuredHeight)
+          viewTreeObserver.dispatchOnGlobalLayout()
+        }
+    }
   }
 
   open fun didAddView(experience: T) {
@@ -50,6 +52,20 @@ open class WrappedViewGroup<T: View>(context: Context) : ViewGroup(context) {
 
   open fun didRemoveView(experience: T) {
     // nop
+  }
+
+  protected fun getWrappedChildView(): T? {
+    return wrappedView
+  }
+
+  override fun getChildCount(): Int {
+    // React Native should not try to manage our inner wrapped view
+    return 0
+  }
+
+  override fun getChildAt(index: Int): View? {
+    // Prevent React Native from accessing internal children
+    return null
   }
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {

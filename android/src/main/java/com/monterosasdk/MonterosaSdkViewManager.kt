@@ -18,14 +18,14 @@ class MonterosaSdkExperienceViewManager : ViewGroupManager<MonterosaSDKExperienc
   }
 
   override fun createViewInstance(reactContext: ThemedReactContext): MonterosaSDKExperienceView {
-    Log.e("MonterosaSDK", "Creating a view instance.")
+    Log.d("MonterosaSDK", "Creating a view instance.")
 
     return MonterosaSDKExperienceView(reactContext)
   }
 
   @ReactProp(name = "configuration")
   fun setConfiguration(view: MonterosaSDKExperienceView, configuration: ReadableMap) {
-    Log.e("MonterosaSDK", "Updating configuration of a view")
+    Log.d("MonterosaSDK", "Updating configuration of a view")
 
     view.configuration = configuration.toHashMap()
   }
@@ -44,8 +44,8 @@ class MonterosaSdkExperienceViewManager : ViewGroupManager<MonterosaSDKExperienc
     args: ReadableArray?
   ) {
     super.receiveCommand(root, commandId, args)
-    Log.e("MonterosaSDK", "Args: $args")
-    Log.e("MonterosaSDK", "commandId: $commandId")
+    Log.d("MonterosaSDK", "Args: $args")
+    Log.d("MonterosaSDK", "commandId: $commandId")
 
     if (args == null) return
 
@@ -81,6 +81,8 @@ class MonterosaSdkExperienceViewManager : ViewGroupManager<MonterosaSDKExperienc
       )
     )
   }
+
+  override fun needsCustomLayoutForChildren(): Boolean = true
 
   companion object {
     private const val COMMAND_SEND_MESSAGE = 1

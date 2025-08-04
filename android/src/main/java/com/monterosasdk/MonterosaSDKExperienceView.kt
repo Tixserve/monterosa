@@ -62,6 +62,12 @@ class MonterosaSDKExperienceView(context: Context) : WrappedViewGroup<Experience
     debug("Updated token to " + identify.credentials)
   }
 
+  private fun setCredentialsToken(token: String) {
+    val identify = IdentifyKit.default()
+    identify.credentials = Credentials(token)
+    debug("Set token to " + identify.credentials)
+  }
+
   private fun recreateExperience(config: Configuration, core: Core) {
     post {
       val overrideURL = config.experienceUrl?.let { URL(it) }
@@ -99,7 +105,7 @@ class MonterosaSDKExperienceView(context: Context) : WrappedViewGroup<Experience
     sendReactNativeMessage(EventType.DEBUG, Arguments.createMap().apply {
       putString("message", message)
     })
-    Log.e("MonterosaSDK", message)
+    Log.d("MonterosaSDK", message)
   }
 
   private fun sendReactNativeMessage(type: EventType, payload: ReadableMap) {
@@ -236,7 +242,7 @@ class MonterosaSDKExperienceView(context: Context) : WrappedViewGroup<Experience
   }
 
   fun sendMessage(action: String, payload: Map<String, Any>) {
-    val experience = getChildAt(0) as? ExperienceView
+    val experience = getWrappedChildView() as? ExperienceView
 
     if (experience == null) {
       debug("Sent a message when the Experience is not available")
@@ -248,7 +254,7 @@ class MonterosaSDKExperienceView(context: Context) : WrappedViewGroup<Experience
   }
 
   fun sendRequest(action: String, payload: Map<String, Any>, timeout: Long) {
-    val experience = getChildAt(0) as? ExperienceView
+    val experience = getWrappedChildView() as? ExperienceView
 
     if (experience == null) {
       debug("Sent a message when the Experience is not available")
