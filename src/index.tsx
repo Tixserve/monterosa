@@ -20,6 +20,7 @@ type MonterosaSdkProps = {
     projectId: string;
     eventId?: string;
     token?: string;
+    backgroundColor?: string;
     parameters?: { [key: string]: string };
     autoresizesHeight?: boolean;
     hidesHeadersAndFooters?: boolean;

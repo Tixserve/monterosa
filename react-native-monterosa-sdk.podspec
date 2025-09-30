@@ -3,6 +3,9 @@ require "json"
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32'
 
+# Define the SDK version as a variable
+sdk_version = "0.16.15"
+
 Pod::Spec.new do |s|
   s.name         = "react-native-monterosa-sdk"
   s.version      = package["version"]
@@ -17,11 +20,11 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
   # iOS SDK dependencies
-  s.dependency 'MonterosaSDKCommon', "0.16.13"
-  s.dependency 'MonterosaSDKConnectKit', "0.16.13"
-  s.dependency 'MonterosaSDKCore', "0.16.13"
-  s.dependency 'MonterosaSDKLauncherKit', "0.16.13"
-  s.dependency 'MonterosaSDKIdentifyKit', "0.16.13"
+  s.dependency 'MonterosaSDKCommon', sdk_version
+  s.dependency 'MonterosaSDKConnectKit', sdk_version
+  s.dependency 'MonterosaSDKCore', sdk_version
+  s.dependency 'MonterosaSDKLauncherKit', sdk_version
+  s.dependency 'MonterosaSDKIdentifyKit', sdk_version
 
   # Use install_modules_dependencies helper to install the dependencies if React Native version >=0.71.0.
   # See https://github.com/facebook/react-native/blob/febf6b7f33fdb4904669f99d795eba4c0f95d7bf/scripts/cocoapods/new_architecture.rb#L79.

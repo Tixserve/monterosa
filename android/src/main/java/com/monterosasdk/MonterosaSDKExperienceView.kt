@@ -80,6 +80,7 @@ class MonterosaSDKExperienceView(context: Context) : WrappedViewGroup<Experience
           supportsLoadingState = false,
           loadingViewProvider = null,
           errorViewProvider = null,
+          backgroundColor = config.backgroundColor,
           parameters = config.parameters,
           launchesURLsWithBlankTargetToChrome = config.launchesURLsWithBlankTargetToChrome
         ),

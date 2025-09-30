@@ -1,5 +1,6 @@
 import React
 
+import UIKit
 import MonterosaSDKCore
 import MonterosaSDKLauncherKit
 import MonterosaSDKIdentifyKit
@@ -96,6 +97,7 @@ class MonterosaSdkExperienceView : UIView {
     }
     
     func recreateExperience(configuration: Configuration, core: Core) {
+        let backgroundColor = configuration.backgroundColor.flatMap { UIColor(hexString: $0) }
         let experience = Launcher.from(core: core).getExperience(
             experienceConfiguration: ExperienceConfiguration(
                 type: configuration.embedType,
@@ -107,7 +109,8 @@ class MonterosaSdkExperienceView : UIView {
                 loadingViewProvider: nil,
                 errorViewProvider: nil,
                 launchesURLsWithBlankTargetToSafari: configuration.launchesURLsWithBlankTargetToSafari,
-                isInspectable: configuration.isInspectable
+                isInspectable: configuration.isInspectable,
+                backgroundColor: backgroundColor
             )
         )
 
@@ -332,6 +335,7 @@ struct Configuration {
     let hidesHeadersAndFooters: Bool
     let launchesURLsWithBlankTargetToSafari: Bool
     let isInspectable: Bool
+    let backgroundColor: String? 
 
     func isDifferentExperienceThan(previousConfiguration: Configuration?) -> Bool {
         guard let prev = previousConfiguration else {
@@ -392,7 +396,8 @@ extension NSDictionary {
             autoresizesHeight: self["autoresizesHeight"] as? Bool ?? false,
             hidesHeadersAndFooters: self["hidesHeadersAndFooters"] as? Bool ?? true,
             launchesURLsWithBlankTargetToSafari: self["launchesURLsWithBlankTargetToBrowser"] as? Bool ?? true,
-            isInspectable: self["isInspectable"] as? Bool ?? false
+            isInspectable: self["isInspectable"] as? Bool ?? false,
+            backgroundColor: self["backgroundColor"] as? String ?? nil
         )
     }
 }
@@ -415,4 +420,36 @@ extension Error {
             "message": message
         ]
     }
+}
+
+extension UIColor {
+
+    public convenience init(hexString: String) {
+        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt32()
+        Scanner(string: hex).scanHexInt32(&int)
+        let a, r, g, b: UInt32
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
+    }
+
+    public func toHexString() -> String {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var alpha: CGFloat = 0
+        getRed(&r, green: &g, blue: &b, alpha: &alpha)
+        let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
+        return String(format: "#%06x", rgb)
+    }
+
 }

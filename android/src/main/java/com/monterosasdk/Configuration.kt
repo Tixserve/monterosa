@@ -3,13 +3,15 @@ package com.monterosasdk
 import android.content.Context
 import co.monterosa.sdk.core.Core
 import kotlin.collections.HashMap
+import android.graphics.Color
 
 data class Configuration(
-  val host: String, 
-  val projectId: String, 
-  val eventId: String?, 
-  val experienceUrl: String?, 
+  val host: String,
+  val projectId: String,
+  val eventId: String?,
+  val experienceUrl: String?,
   val token: String?,
+  val backgroundColor: Int?,
   val parameters: HashMap<String, String>,
   val autoresizesHeight: Boolean,
   val hidesHeadersAndFooters: Boolean,
@@ -23,7 +25,7 @@ data class Configuration(
     return previousConfiguration.host != host ||
       previousConfiguration.projectId != projectId ||
       previousConfiguration.eventId != eventId ||
-      previousConfiguration.experienceUrl != experienceUrl || 
+      previousConfiguration.experienceUrl != experienceUrl ||
       previousConfiguration.parameters != parameters
   }
 
@@ -46,6 +48,13 @@ fun Map<String, Any>.toConfiguration(): Configuration? {
   val host = this["host"] as? String
   val projectId = this["projectId"] as? String
 
+  val color = try {
+    val backgroundColor = this["backgroundColor"] as? String
+    Color.parseColor(backgroundColor)
+  } catch (ex: Exception) {
+    null
+  }
+
   if (host == null || projectId == null) {
     return null
   }
@@ -53,6 +62,7 @@ fun Map<String, Any>.toConfiguration(): Configuration? {
   return Configuration(
     host = host,
     projectId = projectId,
+    backgroundColor = color,
     eventId = this["eventId"] as? String,
     experienceUrl = this["experienceUrl"] as? String,
     token = this["token"] as? String,

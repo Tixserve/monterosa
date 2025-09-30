@@ -104,9 +104,9 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   // Android SDK
-  implementation "co.monterosa.sdk:core:0.16.13"
-  implementation "co.monterosa.sdk:launcherkit:0.16.13"
-  implementation "co.monterosa.sdk:identifykit:0.16.13"
+  implementation "co.monterosa.sdk:core:0.16.14"
+  implementation "co.monterosa.sdk:launcherkit:0.16.14"
+  implementation "co.monterosa.sdk:identifykit:0.16.14"
 }
 
 if (isNewArchitectureEnabled()) {

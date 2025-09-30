@@ -1,6 +1,6 @@
 {
   "name": "@monterosa-sdk/react-native",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Monterosa / Interaction SDK allows you to embed an Experience in your React Native app.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
