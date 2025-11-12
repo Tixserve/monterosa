@@ -27,7 +27,7 @@ class MonterosaSdkExperienceViewManager : ViewGroupManager<MonterosaSDKExperienc
   fun setConfiguration(view: MonterosaSDKExperienceView, configuration: ReadableMap) {
     Log.d("MonterosaSDK", "Updating configuration of a view")
 
-    view.configuration = configuration.toHashMap()
+    view.configuration = configuration.toHashMap() as Map<String, Any>
   }
 
   /**
@@ -38,6 +38,7 @@ class MonterosaSdkExperienceViewManager : ViewGroupManager<MonterosaSDKExperienc
     "sendRequestToNode" to COMMAND_SEND_REQUEST
   )
 
+  @Deprecated("Deprecated in Java")
   override fun receiveCommand(
     root: MonterosaSDKExperienceView,
     commandId: Int,
@@ -52,13 +53,13 @@ class MonterosaSdkExperienceViewManager : ViewGroupManager<MonterosaSDKExperienc
     when (commandId) {
       // action, payload
       COMMAND_SEND_MESSAGE -> root.sendMessage(
-        args.getString(0),
-        args.getMap(1).toHashMap()
+        args.getString(0) ?: "",
+        args.getMap(1)?.toHashMap() as Map<String, Any>
       )
       // action, payload, timeoutSeconds
       COMMAND_SEND_REQUEST -> root.sendRequest(
-        args.getString(0),
-        args.getMap(1).toHashMap(),
+        args.getString(0) ?: "",
+        args.getMap(1)?.toHashMap() as Map<String, Any>,
         args.getInt(2).toLong()
       )
     }

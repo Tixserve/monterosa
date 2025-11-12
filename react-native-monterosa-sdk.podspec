@@ -4,7 +4,7 @@ package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32'
 
 # Define the SDK version as a variable
-sdk_version = "0.16.15"
+sdk_version = "0.16.17"
 
 Pod::Spec.new do |s|
   s.name         = "react-native-monterosa-sdk"

@@ -8,7 +8,7 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:7.2.1"
+    classpath "com.android.tools.build:gradle:8.4.2"
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
@@ -104,9 +104,9 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   // Android SDK
-  implementation "co.monterosa.sdk:core:0.16.14"
-  implementation "co.monterosa.sdk:launcherkit:0.16.14"
-  implementation "co.monterosa.sdk:identifykit:0.16.14"
+  implementation "co.monterosa.sdk:core:0.16.15"
+  implementation "co.monterosa.sdk:launcherkit:0.16.15"
+  implementation "co.monterosa.sdk:identifykit:0.16.15"
 }
 
 if (isNewArchitectureEnabled()) {

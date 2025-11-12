@@ -100,6 +100,7 @@ class MonterosaSDKExperienceView(context: Context) : WrappedViewGroup<Experience
   override fun didRemoveView(experience: ExperienceView) {
     experience.listener = null
     experience.identify?.listener?.remove(this)
+    experience.destroy()
   }
 
   private fun debug(message: String) {
