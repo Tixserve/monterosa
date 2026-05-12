@@ -1,0 +1,6 @@
+pluginManagement {
+    includeBuild("../node_modules/@react-native/gradle-plugin")
+}
+plugins { id("com.facebook.react.settings") }
+
+rootProject.name = "monterosa-sdk_react-native"

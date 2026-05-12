@@ -4,7 +4,7 @@ package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32'
 
 # Define the SDK version as a variable
-sdk_version = "0.16.17"
+sdk_version = "0.17.0"
 
 Pod::Spec.new do |s|
   s.name         = "react-native-monterosa-sdk"
@@ -14,14 +14,13 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "13.0" }
+  s.platforms    = { :ios => "15.1" }
   s.source       = { :git => "https://gitlab.com/monterosa-sdk/react-native.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
   # iOS SDK dependencies
   s.dependency 'MonterosaSDKCommon', sdk_version
-  s.dependency 'MonterosaSDKConnectKit', sdk_version
   s.dependency 'MonterosaSDKCore', sdk_version
   s.dependency 'MonterosaSDKLauncherKit', sdk_version
   s.dependency 'MonterosaSDKIdentifyKit', sdk_version

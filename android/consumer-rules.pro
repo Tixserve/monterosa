@@ -1,0 +1,2 @@
+-keep class co.monterosa.sdk.** { *; }
+-keepattributes Signature

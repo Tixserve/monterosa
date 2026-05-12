@@ -109,8 +109,11 @@ class MonterosaSdkExperienceView : UIView {
                 loadingViewProvider: nil,
                 errorViewProvider: nil,
                 launchesURLsWithBlankTargetToSafari: configuration.launchesURLsWithBlankTargetToSafari,
+                allowsPopupBehavior :configuration.allowsPopupBehavior,
                 isInspectable: configuration.isInspectable,
-                backgroundColor: backgroundColor
+                allowsInlineMediaPlayback: configuration.allowsInlineMediaPlayback,
+                backgroundColor: backgroundColor,
+                showsDefaultShareSheet: configuration.showsDefaultShareSheet
             )
         )
 
@@ -200,6 +203,7 @@ extension MonterosaSdkExperienceView: ExperienceViewDelegate {
         case didFailLoading
         case didChangeIntrinsicSize
         case didBecomeReady
+        case didRequestShare
     }
     
     func didStartLoading(experienceView: MonterosaSDKLauncherKit.ExperienceView) {
@@ -250,6 +254,21 @@ extension MonterosaSdkExperienceView: ExperienceViewDelegate {
         sendReactNativeMessage(
             type: EventType.experienceEvent,
             payload: [ "event": ExperienceEventType.didBecomeReady.rawValue ]
+        )
+    }
+
+    func didRequestShare(experienceView: MonterosaSDKLauncherKit.ExperienceView, content: ShareContent) {
+        sendReactNativeMessage(
+            type: EventType.experienceEvent,
+            payload: [
+                "event": ExperienceEventType.didRequestShare.rawValue,
+                "share": [
+                    "url": content.url,
+                    "title": content.title,
+                    "description": content.description,
+                    "imageUrl": content.imageURL
+                ]
+            ]
         )
     }
 }
@@ -334,8 +353,11 @@ struct Configuration {
     let autoresizesHeight: Bool
     let hidesHeadersAndFooters: Bool
     let launchesURLsWithBlankTargetToSafari: Bool
+    let allowsPopupBehavior: Bool
     let isInspectable: Bool
-    let backgroundColor: String? 
+    let allowsInlineMediaPlayback: Bool
+    let showsDefaultShareSheet: Bool
+    let backgroundColor: String?
 
     func isDifferentExperienceThan(previousConfiguration: Configuration?) -> Bool {
         guard let prev = previousConfiguration else {
@@ -396,7 +418,10 @@ extension NSDictionary {
             autoresizesHeight: self["autoresizesHeight"] as? Bool ?? false,
             hidesHeadersAndFooters: self["hidesHeadersAndFooters"] as? Bool ?? true,
             launchesURLsWithBlankTargetToSafari: self["launchesURLsWithBlankTargetToBrowser"] as? Bool ?? true,
+            allowsPopupBehavior: self["allowsPopupBehavior"] as? Bool ?? false,
             isInspectable: self["isInspectable"] as? Bool ?? false,
+            allowsInlineMediaPlayback: self["allowsInlineMediaPlayback"] as? Bool ?? false,
+            showsDefaultShareSheet: self["showsDefaultShareSheet"] as? Bool ?? true,
             backgroundColor: self["backgroundColor"] as? String ?? nil
         )
     }

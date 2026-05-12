@@ -3,8 +3,8 @@ type MonterosaSdkProps = {
     style: ViewStyle;
     configuration: {
         host: string;
-        experienceUrl: string;
         projectId: string;
+        experienceUrl?: string;
         eventId?: string;
         token?: string;
         backgroundColor?: string;
@@ -13,8 +13,11 @@ type MonterosaSdkProps = {
         };
         autoresizesHeight?: boolean;
         hidesHeadersAndFooters?: boolean;
+        allowsPopupBehavior?: boolean;
+        showsDefaultShareSheet?: boolean;
         launchesURLsWithBlankTargetToBrowser?: boolean;
         isInspectable?: boolean;
+        allowsInlineMediaPlayback?: boolean;
     };
     onMessageReceived: any;
     ref: any;

@@ -47,7 +47,16 @@ Once done, copy the deploy token value (not the username) and execute:
 export NPM_TOKEN=<MY TOKEN>
 ```
 
-That's all the environment setup needed. After that create a pre-release with either `yarn prereleasePatch`, `yarn prereleaseMinor` or `yarn prereleaseMajor`:
+That's all the environment setup needed. After that use the appropriate pre-release command depending on what you need:
+
+| Command                | Example result                | Use when                              |
+|------------------------|-------------------------------|---------------------------------------|
+| `yarn prereleaseRC`    | `0.3.0-rc.0` → `0.3.0-rc.1`  | Incrementing an existing RC           |
+| `yarn prereleasePatch` | `0.3.0` → `0.3.1-rc.0`       | Starting an RC for a new patch release |
+| `yarn prereleaseMinor` | `0.3.0` → `0.4.0-rc.0`       | Starting an RC for a new minor release |
+| `yarn prereleaseMajor` | `0.3.0` → `1.0.0-rc.0`       | Starting an RC for a new major release |
+
+This will create a new commit, tag and release of the SDK that won't be yet available by default to users (they can opt-in though).
 
 ```
 Joseps-MacBook-Pro:react-native josep$ yarn prereleaseMinor
@@ -71,8 +80,6 @@ Changeset:
 🏁 Done (in 16s.)
 ✨  Done in 17.77s.
 ```
-
-This will create a new commit, tag and release of the SDK that won't be yet available by default to users (they can opt-in though).
 
 Once you have passed testing and are happy with the SDK, please do the final release with either `yarn releasePatch`, `yarn releaseMinor` or `yarn releaseMajor`. The behaviour will be equally hands-free to creating a prerelease.
 

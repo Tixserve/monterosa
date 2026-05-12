@@ -16,16 +16,19 @@ type MonterosaSdkProps = {
   style: ViewStyle;
   configuration: {
     host: string;
-    experienceUrl: string;
     projectId: string;
+    experienceUrl?: string;
     eventId?: string;
     token?: string;
     backgroundColor?: string;
     parameters?: { [key: string]: string };
     autoresizesHeight?: boolean;
     hidesHeadersAndFooters?: boolean;
+    allowsPopupBehavior?: boolean;
+    showsDefaultShareSheet?: boolean;
     launchesURLsWithBlankTargetToBrowser?: boolean;
     isInspectable?: boolean;
+    allowsInlineMediaPlayback?: boolean;
   };
   onMessageReceived: any;
   ref: any;
