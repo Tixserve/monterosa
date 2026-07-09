@@ -69,7 +69,7 @@ fun Map<String, Any>.toConfiguration(): Configuration? {
         val k = it.key as? String
         val v = it.value as? String
         if (k != null && v != null) k to v else null
-    }?.toMap() as? HashMap ?: hashMapOf()
+    }?.toMap()?.let { HashMap(it) } ?: hashMapOf()
 
     val launchesURLsWithBlankTargetToBrowser =
         this["launchesURLsWithBlankTargetToBrowser"] as? Boolean ?: true

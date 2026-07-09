@@ -18,12 +18,16 @@ import co.monterosa.sdk.launcherkit.model.ShareContent
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.ReadableMap
-import com.facebook.react.uimanager.events.RCTEventEmitter
+import com.facebook.react.bridge.WritableMap
+import com.facebook.react.uimanager.UIManagerHelper
+import com.facebook.react.uimanager.events.Event
 import java.net.URL
 
 class MonterosaSdkExperienceView(
     context: Context
 ) : WrappedViewGroup<ExperienceView>(context), ExperienceViewListener, IdentifyKitListener {
+
+    private var isDestroyed = false
 
     var configuration: Map<String, Any> = emptyMap()
         set(value) {
@@ -65,6 +69,7 @@ class MonterosaSdkExperienceView(
 
     private fun recreateExperience(config: Configuration, core: Core) {
         post {
+            if (isDestroyed) return@post
             val overrideURL = config.experienceUrl
                 ?.takeIf {
                     it.isNotEmpty()
@@ -117,19 +122,19 @@ class MonterosaSdkExperienceView(
     }
 
     private fun sendReactNativeMessage(type: EventType, payload: ReadableMap) {
-        val event = Arguments.createMap().apply {
-            putString("type", type.value)
-            putMap("payload", payload)
-        }
-
         val reactContext = context as? ReactContext ?: run {
             Log.e(TAG, "Cannot send event '$type': context is not a ReactContext")
             return
         }
 
-        reactContext
-            .getJSModule(RCTEventEmitter::class.java)
-            .receiveEvent(id, "onMessageReceived", event)
+        val eventData = Arguments.createMap().apply {
+            putString("type", type.value)
+            putMap("payload", payload)
+        }
+
+        val surfaceId = UIManagerHelper.getSurfaceId(this)
+        UIManagerHelper.getEventDispatcher(reactContext, surfaceId)
+            ?.dispatchEvent(OnMessageReceivedEvent(surfaceId, id, eventData))
     }
 
     // Experience View Listener
@@ -272,6 +277,7 @@ class MonterosaSdkExperienceView(
     }
 
     fun destroy() {
+        isDestroyed = true
         getWrappedChildView()?.let { experience ->
             didRemoveView(experience)
         }
@@ -318,4 +324,14 @@ enum class EventType(val value: String) {
     IDENTIFY_EVENT("identifyEvent"),
     ERROR("error"),
     EXPERIENCE_EVENT("experienceEvent")
+}
+
+private class OnMessageReceivedEvent(
+    surfaceId: Int,
+    viewId: Int,
+    private val payload: WritableMap
+) : Event<OnMessageReceivedEvent>(surfaceId, viewId) {
+    override fun getEventName() = "onMessageReceived"
+    override fun getEventData() = payload
+    override fun canCoalesce() = false
 }

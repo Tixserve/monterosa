@@ -1,6 +1,6 @@
 {
   "name": "@monterosa-sdk/react-native",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "Monterosa / Interaction SDK allows you to embed an Experience in your React Native app.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -31,6 +31,10 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepack": "bob build",
+    "prerelease:patch": "node scripts/release.js patch",
+    "prerelease:minor": "node scripts/release.js minor",
+    "prerelease:major": "node scripts/release.js major",
+    "release": "node scripts/release.js promote",
     "releasePatch": "release-it --increment patch --ci",
     "releaseMinor": "release-it --increment minor --ci",
     "releaseMajor": "release-it --increment major --ci",
@@ -62,6 +66,7 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.2.2",
+    "@react-native/babel-preset": "0.77.3",
     "@react-native-community/eslint-config": "^3.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^28.1.2",

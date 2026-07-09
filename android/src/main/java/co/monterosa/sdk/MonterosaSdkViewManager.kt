@@ -78,6 +78,7 @@ class MonterosaSdkViewManager : ViewGroupManager<MonterosaSdkExperienceView>() {
     }
 
     override fun onDropViewInstance(view: MonterosaSdkExperienceView) {
+        Log.d("MonterosaSDK", "Dropping view instance.")
         view.destroy()
         super.onDropViewInstance(view)
     }

@@ -72,7 +72,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
     // Android SDK
-    implementation("co.monterosa.sdk:core:0.17.0")
-    implementation("co.monterosa.sdk:launcherkit:0.17.0")
-    implementation("co.monterosa.sdk:identifykit:0.17.0")
+    implementation("co.monterosa.sdk:core:0.17.1")
+    implementation("co.monterosa.sdk:launcherkit:0.17.1")
+    implementation("co.monterosa.sdk:identifykit:0.17.1")
+
+    // Testing
+    testImplementation("junit:junit:4.13.2")
 }
